@@ -24,7 +24,7 @@ subprojects {
             property 'sonar.projectKey', 'org.sonarqube.gradle-multi-module-jacoco'
             property "sonar.host.url", "http://localhost:9000"
             property "sonar.token", "sqa_6e4c75395d17eb0d0ec0b84c6387ed26208bc305"
-            property "sonar.java.binaries", "application/build/classes/java/main/org/gradle/sample/app, application/build/classes/java/test/org/gradle/sample/app, list/src/main/java/org/gradle/sample/list, list/src/test/java/org/gradle/sample/list, utilities/src/main/java/org/gradle/sample/utilities, utilities/src/test/java/org/gradle/sample/utilities"
+            property "sonar.java.binaries", "application/build/classes/java/main/org/gradle/sample/app, application/build/classes/java/test/org/gradle/sample/app, list/src/main/java/org/gradle/sample/list, list/src/test/java/org/gradle/sample/list, utilities/src/main/java/org/gradle/sample/utilities"
         }
     }
 
