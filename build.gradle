@@ -17,6 +17,23 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
     apply plugin: 'org.sonarqube'
+
+    jacoco {
+        toolVersion = "0.8.7"
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.required = true
+            csv.required = false
+            html.required = true
+        }
+    }
+
+    test {
+        finalizedBy jacocoTestReport
+    }
+    
     sonar {
         properties {
             property 'sonar.coverage.jacoco.xmlReportPaths', "$projectDir.parentFile.path/build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
@@ -25,6 +42,11 @@ subprojects {
             property "sonar.host.url", "http://localhost:9000"
             property "sonar.token", "sqa_6e4c75395d17eb0d0ec0b84c6387ed26208bc305"
             property "sonar.java.binaries", "application/build/classes/java/main/org/gradle/sample/app, application/build/classes/java/test/org/gradle/sample/app, list/src/main/java/org/gradle/sample/list, list/src/test/java/org/gradle/sample/list, utilities/src/main/java/org/gradle/sample/utilities"
+            property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/codeCoverageReport/codeCoverageReport.xml"
+            // Add the libraries property
+            property "sonar.java.libraries", subprojects.collect { subproject ->
+                subproject.configurations.compileClasspath.findAll { it.exists() }
+            }.flatten().join(',')
         }
     }
 
