@@ -14,10 +14,17 @@ allprojects {
 }
 
 subprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
     apply plugin: 'org.sonarqube'
     sonar {
         properties {
             property 'sonar.coverage.jacoco.xmlReportPaths', "$projectDir.parentFile.path/build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
+            property 'sonar.projectName', 'Example of SonarScanner for Gradle (multimodule with Jacoco code coverage)'
+            property 'sonar.projectKey', 'org.sonarqube.gradle-multi-module-jacoco'
+            property "sonar.host.url", "http://localhost:9000"
+            property "sonar.token", "sqa_6e4c75395d17eb0d0ec0b84c6387ed26208bc305"
+            property "sonar.java.binaries", "application/build/classes/java/main/org/gradle/sample/app, application/build/classes/java/test/org/gradle/sample/app, list/src/main/java/org/gradle/sample/list, list/src/test/java/org/gradle/sample/list, utilities/src/main/java/org/gradle/sample/utilities, utilities/src/test/java/org/gradle/sample/utilities"
         }
     }
 
@@ -29,9 +36,6 @@ subprojects {
 dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.10'
 }
-
-
-apply from: "$project.rootDir/sonar.gradle"
 
 // See here for more info: https://docs.gradle.org/6.4-rc-1/samples/sample_jvm_multi_project_with_code_coverage.html
 //
