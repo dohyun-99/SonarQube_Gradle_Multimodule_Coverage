@@ -26,6 +26,11 @@ subprojects {
     }
 }
 
+dependencies {
+    implementation 'ch.qos.logback:logback-classic:1.2.10'
+}
+
+
 apply from: "$project.rootDir/sonar.gradle"
 
 // See here for more info: https://docs.gradle.org/6.4-rc-1/samples/sample_jvm_multi_project_with_code_coverage.html
