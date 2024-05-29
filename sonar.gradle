@@ -7,6 +7,7 @@ sonar {
         property 'sonar.projectKey', 'org.sonarqube.gradle-multi-module-jacoco'
         property "sonar.host.url", "http://localhost:9000"
         property "sonar.token", "sqa_6e4c75395d17eb0d0ec0b84c6387ed26208bc305"
+        property "sonar.java.binaries", "application/build/classes/java/main/org/gradle/sample/app"
       // etc.
     }
 }
