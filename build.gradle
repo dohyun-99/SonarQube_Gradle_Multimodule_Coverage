@@ -27,26 +27,28 @@ subprojects {
             xml.required = true
             csv.required = false
             html.required = true
+            html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
         }
     }
 
     test {
+        useJUnitPlatform()
         finalizedBy jacocoTestReport
     }
     
     sonar {
         properties {
-            property 'sonar.coverage.jacoco.xmlReportPaths', "$projectDir.parentFile.path/build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
             property 'sonar.projectName', 'Example of SonarScanner for Gradle (multimodule with Jacoco code coverage)'
             property 'sonar.projectKey', 'org.sonarqube.gradle-multi-module-jacoco'
             property "sonar.host.url", "http://localhost:9000"
             property "sonar.token", "sqa_6e4c75395d17eb0d0ec0b84c6387ed26208bc305"
-            property "sonar.java.binaries", "application/build/classes/java/main/org/gradle/sample/app, application/build/classes/java/test/org/gradle/sample/app, list/src/main/java/org/gradle/sample/list, list/src/test/java/org/gradle/sample/list, utilities/src/main/java/org/gradle/sample/utilities"
-            property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/codeCoverageReport/codeCoverageReport.xml"
-            // Add the libraries property
+            // Aggregated sonar.java.binaries and sonar.java.libraries properties
+            property "sonar.java.binaries", subprojects.collect { "${it.buildDir}/classes/java/main" }.join(',')
             property "sonar.java.libraries", subprojects.collect { subproject ->
                 subproject.configurations.compileClasspath.findAll { it.exists() }
             }.flatten().join(',')
+            // Unified Jacoco report path
+            property "sonar.coverage.jacoco.xmlReportPaths", subprojects.collect { "${it.buildDir}/reports/jacoco/test/jacocoTestReport.xml" }.join(',')
         }
     }
 
