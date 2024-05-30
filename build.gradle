@@ -42,13 +42,13 @@ subprojects {
             property 'sonar.projectKey', 'org.sonarqube.gradle-multi-module-jacoco'
             property "sonar.host.url", "http://localhost:9000"
             property "sonar.token", "sqa_6e4c75395d17eb0d0ec0b84c6387ed26208bc305"
-            // Aggregated sonar.java.binaries and sonar.java.libraries properties
-            property "sonar.java.binaries", subprojects.collect { "${it.buildDir}/classes/java/main" }.join(',')
-            property "sonar.java.libraries", subprojects.collect { subproject ->
-                subproject.configurations.compileClasspath.findAll { it.exists() }
-            }.flatten().join(',')
-            // Unified Jacoco report path
-            property "sonar.coverage.jacoco.xmlReportPaths", subprojects.collect { "${it.buildDir}/reports/jacoco/test/jacocoTestReport.xml" }.join(',')
+            property "sonar.sources", "src/main"
+
+            // Check if the test directory exists before setting sonar.tests
+            def testDir = file("${projectDir}/src/test")
+            if (testDir.exists()) {
+                property "sonar.tests", "src/test"
+            }
         }
     }
 
